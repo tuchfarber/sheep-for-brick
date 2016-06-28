@@ -1,0 +1,34 @@
+html,body{
+    padding:0;
+    margin:0;
+}
+#board_area{
+    position:absolute;
+    left:0;
+    top:0;
+    height:512px;
+    width:578px;
+    background-image: url('../boards/new_board.png');
+    background-color:red;
+}
+.tilebtn{
+    display: inline-block;
+    background-color: transparent;
+    cursor: pointer;
+    height:80px;
+    width:80px;
+    margin-left:32px;
+    margin-top:12px;
+}
+#click_tile_area{
+    margin-top:12px;
+}
+.three{
+    margin-left: 106px;
+}
+.four{
+    margin-left:49px;
+}
+.five{
+    margin-left:-8px;
+}
