@@ -1,0 +1,61 @@
+img{
+    display:block;
+    margin:auto;
+    margin-top:50px;
+}
+#loginbox{
+    height:300px;
+    width:300px;
+    margin:auto;
+    background-color:#a6d45f;
+}
+input, #form_btn{
+    margin:auto;
+    display:block;
+}
+input[type="text"]:focus,input[type="password"]:focus{
+    background-color: #efe;
+}
+input[type="text"],input[type="password"]{
+    background-color: #dfd;
+    height:40px;
+    width:200px;
+}
+form > div{
+    margin-top:30px;
+}
+.tab{
+    width:150px;
+    height:50px;
+    background-color:#ddd;
+    border:0;
+    border-top-left-radius:15px;
+    border-top-right-radius:15px;
+}
+.form_btn_selected{
+    background-color:#a6d45f;   
+}
+#loginbox > div{
+    background-color:#fff;
+}
+
+#form_btn{
+    margin-top:20px;
+    height:40px;
+    width:100px;
+    border:0;
+    background-color: #00314d;
+    color:white;
+    border-radius: 5px;
+}
+#error_line{
+    margin-top:5px;
+    color:red;
+    text-align:center;
+    display:block;
+}
+img{
+    height:200px;
+    width:600px;
+    background-color:#ddd;
+}
