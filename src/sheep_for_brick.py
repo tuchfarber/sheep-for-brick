@@ -1,4 +1,4 @@
-from bottle import route, response, request, get, post, TEMPLATE_PATH, template, static_file
+from bottle import route, response, request, get, post, TEMPLATE_PATH, template, static_file, redirect, abort
 import redis
 from passlib.hash import bcrypt
 import uuid
@@ -8,11 +8,9 @@ TEMPLATE_PATH.insert(0,'/var/www/html/templates')
 
 @get('/')
 def index():
-  cookie = request.get_cookie('sfb_token')
-  if cookie:
-    if checkIfLoggedIn(cookie):
-      return "Logged in"
-  return template('home')
+  if checkIfLoggedIn():
+    redirect('/lobby')
+  return template('login')
 
 @get('/static/<path:path>')
 def static_callback(path):
@@ -37,6 +35,19 @@ def signup_callback():
   password = request.forms.get('password')
   return signup(username,password)
 
+@get('/lobby')
+def lobby():
+  if checkIfLoggedIn():
+    return template('lobby')
+  abort(401, error401())
+
+@get('/allgames')
+def allgames():
+  return {'allgames':[1,2,3,4,5]}
+
+def error401():
+  return "Sorry, access is denied. Please log in on the home page"
+
 def userExist(un):
   return red.hget('sfb:user:' + un, 'password')
 
@@ -53,19 +64,20 @@ def signup(un,pw):
 def login(un,pw):
   hash_pass = bcrypt.encrypt(pw)
   if userExist(un) is None:
-    return 'User does not exist'
+    return {'loginStatus':'User does not exist'}
   if bcrypt.verify(pw, red.hget('sfb:user:' + un,'password')):
     cookie_hash = str(uuid.uuid4())
     response.set_cookie('sfb_token',un + ":" + cookie_hash)
     red.hset('sfb:user:' + un, 'token', cookie_hash)
-    return(un + str(uuid.uuid4()))
-    return 'Logged in!'
+    return {'loginStatus':'Success'}
   else:
-    return 'Password incorrect'
+    return {'loginStatus':'Password incorrect'}
 
-def checkIfLoggedIn(cookie):
-  user = str(cookie).split(':')[0]
-  token = str(cookie).split(':')[1]
-  if token == red.hget('sfb:user:' + user, 'token').decode('utf-8'):
-    return True
+def checkIfLoggedIn():
+  cookie = request.get_cookie('sfb_token')
+  if cookie:
+    user = str(cookie).split(':')[0]
+    token = str(cookie).split(':')[1]
+    if token == red.hget('sfb:user:' + user, 'token').decode('utf-8'):
+      return user
   return False

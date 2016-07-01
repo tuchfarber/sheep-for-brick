@@ -18,7 +18,7 @@
             <form action="/login" method="post">
                 <div>
                     <input type="text" placeholder="Username" name="username"><br>
-                    <input class="error" type="password" placeholder="Password" name="password"><br>
+                    <input type="password" placeholder="Password" name="password"><br>
                 </div>
             </form>
             <button id="form_btn">Submit</button>
