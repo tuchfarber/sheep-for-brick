@@ -13,7 +13,7 @@ function setKeyBindings(){
 
 function loginSuccess(data){
     if(data.loginStatus == "Success"){
-        window.location = "/allusers";
+        window.location = "/lobby";
     }else{
         $('#error_line').html(data.loginStatus)
     }

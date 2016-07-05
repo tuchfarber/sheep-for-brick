@@ -3,14 +3,23 @@ $(document).ready(function(){
     setKeyBindings();
 });
 function setKeyBindings(){
-    $('button').click(function(){joinGame()});
+    $('#join').click(function(){joinGame()});
+    $('#new').click(function(){newGame()});
 }
 function joinGame(){
-
+    window.location = '/game/' + $('#games').val()
+}
+function newGame(){
+    $.get('/game/new', newSuccess)
 }
 function populateList(){
     $.get('/allgames', listSuccess)
 }
+
+function newSuccess(data){
+    window.location = '/game/' + data;
+}
+
 function listSuccess(data){
     var retHTML = "";
     games = data.allgames;
