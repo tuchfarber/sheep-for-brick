@@ -1,5 +1,4 @@
 from bottle import route, run, template
-import redis
 
 from src import user, lobby, login, util, game
 

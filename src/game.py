@@ -1,6 +1,7 @@
 from bottle import route, response, request, get, post, TEMPLATE_PATH, template, static_file, redirect, abort
 import redis
 import uuid
+from src import util, user
 
 red = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)
 TEMPLATE_PATH.insert(0,'/var/www/html/templates')
@@ -14,6 +15,15 @@ def newGame():
 
 @get('/game/<hash>')
 def viewGame(hash):
-    if red.hget('sfb:game:' + hash, 'init'):
-        return "Game: " + hash
-    return "This game does not exist"
+    cur_user = user.checkIfLoggedIn()
+    cur_players = red.hget('sfb:game:' + hash,'players')
+    if cur_players == None or len(cur_players) < 4:
+        red.lpush('sfb:game:' + hash + ':players',cur_user)
+    else:
+        return "Game is at maximum capacity"
+    if cur_user:
+        if red.hget('sfb:game:' + hash, 'init'):
+            num_players = red.lrange('sfb:game:' + hash + ':players',0,-1)
+            return template('game',hash=hash,user=cur_user,num_players=num_players)
+        return "This game does not exist"
+    abort(401,util.error401())

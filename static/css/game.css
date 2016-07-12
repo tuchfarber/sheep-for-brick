@@ -1,0 +1,43 @@
+html,body{
+    height:100%;
+    width:100%;
+    background-color:lightgreen;
+}
+#playerbar{
+    height:50px;
+    background-color:red;
+}
+.player{
+    width:calc((100% - 300px) / 4);
+    height:100%;
+    float:left;
+}
+#gameinfo{
+    width:300px;
+    float:left;
+    height:100%;
+    background-color:white;
+}
+#player1box,#player3box{
+    background-color:green;
+}
+#player2box,#player4box{
+    background-color:lightgreen;
+}
+#boardarea{
+    height:calc(100% - 150px);
+    width:calc(100% - 300px);
+    float:left;
+    background-color:orange;
+}
+#inventory{
+    height:calc(100% - 150px);
+    width:300px;
+    float:right;
+    background-color:purple;
+}
+#actionbar{
+    height:100px;
+    background-color:blue;
+    clear:both;
+}
