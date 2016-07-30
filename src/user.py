@@ -3,7 +3,7 @@ import redis
 from passlib.hash import bcrypt
 import uuid
 
-red = redis.StrictRedis(host='127.0.0.1',port=6379,db=0)
+red = redis.StrictRedis(host='redis_01',port=6379,db=0)
 TEMPLATE_PATH.insert(0,'/var/www/html/templates')
 
 def userExist(un):
